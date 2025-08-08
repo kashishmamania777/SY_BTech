@@ -1,0 +1,347 @@
+Q1
+class PDA:
+    def __init__(self):
+        self.stack = []
+
+    def transition(self, input_string):
+        for symbol in input_string:
+            if symbol == 'a':
+                self.stack.append('a')
+            elif symbol == 'b':
+                if not self.stack:
+                    return False
+                self.stack.pop()
+            else:
+                return False
+
+        return len(self.stack) > 0
+
+def main():
+    pda = PDA()
+    input_string = input("Enter the string: ")
+    if pda.transition(input_string):
+        print("Accepted")
+    else:
+        print("Rejected")
+
+if __name__ == "__main__":
+    main()
+
+Q2
+class PDA:
+    def __init__(self):
+        self.stack = []
+
+    def transition(self, input_string):
+        a_count = 0
+        b_count = 0
+
+        for symbol in input_string:
+            if symbol == 'a':
+                self.stack.append('a')
+                a_count += 1
+            elif symbol == 'b':
+                if not self.stack:
+                    return False
+                self.stack.pop()
+                b_count += 1
+            else:
+                return False
+
+        return a_count != b_count
+
+def main():
+    pda = PDA()
+    input_string = input("Enter the string: ")
+    if pda.transition(input_string):
+        print("Accepted")
+    else:
+        print("Rejected")
+
+if __name__ == "__main__":
+    main()
+
+Q3
+class PDA:
+    def __init__(self):
+        self.stack = []
+
+    def transition(self, input_string):
+        for symbol in input_string:
+            self.stack.append(symbol)
+
+        # Pop symbols and compare with input symbols in reverse order
+        for symbol in reversed(input_string):
+            if not self.stack:
+                return False
+            if symbol != self.stack.pop():
+                return False
+
+        # If stack is empty, accept
+        return len(self.stack) == 0
+
+def main():
+    pda = PDA()
+    input_string = input("Enter the string: ")
+    if pda.transition(input_string):
+        print("Accepted")
+    else:
+        print("Rejected")
+
+if __name__ == "__main__":
+    main()
+
+Q4
+class PDA:
+    def transition(self, input_string):
+        state = 0
+        zero_count = 0
+
+        for symbol in input_string:
+            if state == 0:
+                if symbol == '0':
+                    zero_count += 1
+                elif symbol == '1':
+                    state = 1
+                else:
+                    return False
+            elif state == 1:
+                if symbol == '1':
+                    state = 2
+                else:
+                    return False
+            elif state == 2:
+                if symbol == '0':
+                    zero_count -= 1
+                    if zero_count < 0:
+                        return False
+                else:
+                    return False
+
+        return zero_count == 0 and state == 2
+
+def main():
+    pda = PDA()
+    input_string = input("Enter the string: ")
+    if pda.transition(input_string):
+        print("Accepted")
+    else:
+        print("Rejected")
+
+if __name__ == "__main__":
+    main()
+
+Q5
+class PDA:
+    def transition(self, input_string):
+        state = 0
+        a_count = 0
+        c_count = 0
+        stack = []
+
+        for symbol in input_string:
+            if state == 0:
+                if symbol == 'a':
+                    a_count += 1
+                elif symbol == 'b':
+                    state = 1
+                elif symbol == 'c':
+                    c_count += 1
+                else:
+                    return False
+            elif state == 1:
+                if symbol == 'b':
+                    stack.append('b')
+                elif symbol == 'c':
+                    c_count += 1
+                else:
+                    return False
+            elif state == 2:
+                if symbol == 'c':
+                    if not stack:
+                        return False
+                    stack.pop()
+                    c_count += 1
+                else:
+                    return False
+
+        return a_count == c_count and (c_count == len(stack) or c_count == len(stack) + 1)
+
+def main():
+    pda = PDA()
+    input_string = input("Enter the string: ")
+    if pda.transition(input_string):
+        print("Accepted")
+    else:
+        print("Rejected")
+
+if __name__ == "__main__":
+    main()
+
+Q6
+class PDA:
+    def transition(self, input_string):
+        state = 0
+        a_count = 0
+        b_count = 0
+        stack = []
+
+        for symbol in input_string:
+            if state == 0:
+                if symbol == 'a':
+                    a_count += 1
+                elif symbol == 'b':
+                    state = 1
+                    stack.append('b')
+                else:
+                    return False
+            elif state == 1:
+                if symbol == 'b':
+                    b_count += 1
+                else:
+                    return False
+
+        return a_count > 0 and b_count == a_count + 2
+
+# Usage
+pda = PDA()
+input_string = input("Enter the string: ")
+if pda.transition(input_string):
+    print("Accepted")
+else:
+    print("Rejected")
+
+Q7
+class PDA:
+    def transition(self, input_string):
+        state = 0
+        a_count = 0
+        b_count = 0
+        c_count = 0
+        stack = []
+
+        for symbol in input_string:
+            if state == 0:
+                if symbol == 'a':
+                    a_count += 1
+                elif symbol == 'b':
+                    state = 1
+                else:
+                    return False
+            elif state == 1:
+                if symbol == 'b':
+                    b_count += 1
+                elif symbol == 'c':
+                    state = 2
+                else:
+                    return False
+            elif state == 2:
+                if symbol == 'c':
+                    c_count += 1
+                else:
+                    return False
+
+        return a_count > 0 and b_count == 1 and c_count == 2 * a_count
+
+# Usage
+pda = PDA()
+input_string = input("Enter the string: ")
+if pda.transition(input_string):
+    print("Accepted")
+else:
+    print("Rejected")
+
+Q8
+class PDA:
+    def transition(self, input_string):
+        state = 0
+        a_count = 0
+        b_count = 0
+        stack = []
+
+        for symbol in input_string:
+            if state == 0:
+                if symbol == 'a':
+                    a_count += 1
+                elif symbol == 'b':
+                    state = 1
+                    stack.append('b')
+                else:
+                    return False
+            elif state == 1:
+                if symbol == 'b':
+                    b_count += 1
+                else:
+                    return False
+
+        return a_count > 0 and b_count == 3 * a_count
+
+# Usage
+pda = PDA()
+input_string = input("Enter the string: ")
+if pda.transition(input_string):
+    print("Accepted")
+else:
+    print("Rejected")
+
+Q9
+class PDA:
+    def transition(self, input_string):
+        state = 0
+        stack = []
+
+        for symbol in input_string:
+            if state == 0:
+                stack.append(symbol)
+            elif state == 1:
+                if symbol != stack.pop():
+                    return False
+
+        return True
+
+# Usage
+pda = PDA()
+input_string = input("Enter the string: ")
+if pda.transition(input_string):
+    print("Accepted")
+else:
+    print("Rejected")
+
+Q10
+class PDA:
+    def transition(self, input_string):
+        state = 0
+        a_count = 0
+        b_count = 0
+        c_count = 0
+
+        for symbol in input_string:
+            if state == 0:
+                if symbol == 'a':
+                    a_count += 1
+                elif symbol == 'b':
+                    state = 1
+                else:
+                    return False
+            elif state == 1:
+                if symbol == 'b':
+                    b_count += 1
+                elif symbol == 'c':
+                    state = 2
+                else:
+                    return False
+            elif state == 2:
+                if symbol == 'c':
+                    c_count += 1
+                else:
+                    return False
+
+        return (a_count != b_count) or (b_count != c_count)
+
+# Usage
+pda = PDA()
+input_string = input("Enter the string: ")
+if pda.transition(input_string):
+    print("Accepted")
+else:
+    print("Rejected")
